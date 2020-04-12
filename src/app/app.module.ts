@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NgrxFormsModule } from 'ngrx-forms';
+import * as fromApp from './state/reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +15,7 @@ import { NgrxFormsModule } from 'ngrx-forms';
     BrowserModule,
     AppRoutingModule,
     NgrxFormsModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({ app: fromApp.reducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
