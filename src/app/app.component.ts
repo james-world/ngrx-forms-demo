@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Team } from './state/reducer';
 
 @Component({
-  selector: 'app-root',
+  selector: 'tb-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

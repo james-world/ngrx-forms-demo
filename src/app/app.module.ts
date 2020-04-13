@@ -21,9 +21,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CustomErrorStateMatcherDirective } from './custom-error-state-matcher.directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PlayerComponent } from './player/player.component';
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
-  declarations: [AppComponent, CustomErrorStateMatcherDirective],
+  declarations: [AppComponent, CustomErrorStateMatcherDirective, PlayerComponent, TeamComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

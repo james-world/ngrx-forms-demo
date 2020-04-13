@@ -5,92 +5,15 @@
     >
   </div>
   <div class="main">
-    <ng-container *ngIf="{ form: teamForm$ | async } as data">
-      <mat-card id="team-form">
-        <form novalidate [ngrxFormState]="data.form">
-          <div>
-            <mat-form-field>
-              <mat-label>Team Name</mat-label>
-              <input
-                required
-                matInput
-                [ngrxFormControlState]="data.form.controls.name"
-              />
-              <mat-error *ngIf="data.form.errors._name?.required">
-                A team name is required
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field style="width: 60px;">
-              <mat-label>Max Subs</mat-label>
-              <input
-                required
-                matInput
-                min="0"
-                max="5"
-                [ngrxFormControlState]="data.form.controls.maxSubs"
-                type="number"
-              />
-              <mat-error
-                *ngIf="
-                  data.form.controls.maxSubs.errors?.lessThanOrEqualTo ||
-                  data.form.controls.maxSubs.errors?.greaterThanOrEqualTo
-                "
-              >
-                Must be between 0 and 5
-              </mat-error>
-              <mat-error *ngIf="data.form.controls.maxSubs.errors?.tooManySubs">
-                There are
-                {{ data.form.controls.maxSubs.errors.tooManySubs }} too many
-                subs
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <mat-list
-            *ngFor="
-              let player of data.form.controls.players.controls;
-              trackBy: trackByIndex;
-              let i = index
-            "
-          >
-            <mat-form-field>
-              <mat-label>Player Name</mat-label>
-              <input
-                required
-                matInput
-                [ngrxFormControlState]="player.controls.name"
-              />
-              <mat-error *ngIf="player.controls.name.isInvalid">
-                A player name is required
-              </mat-error>
-            </mat-form-field>
-            <mat-checkbox [ngrxFormControlState]="player.controls.isSub"
-              >Sub</mat-checkbox
-            >
-            <button mat-icon-button type="button" (click)="removePlayer(i)">
-              <mat-icon style="font-size: 18px; vertical-align: middle;"
-                >delete</mat-icon
-              >
-            </button>
-          </mat-list>
-          <div class="button-row">
-            <button mat-button type="button" (click)="addPlayer()">
-              ADD PLAYER
-            </button>
-            <button
-              mat-button
-              type="button"
-              (click)="saveTeam(data.form.value)"
-              [disabled]="data.form.isInvalid || data.form.isPristine"
-            >
-              SAVE TEAM
-            </button>
-          </div>
-        </form>
-      </mat-card>
-      <mat-card>
-        {{ team$ | async | json }}
-      </mat-card>
-    </ng-container>
+    <tb-team
+      [team]="teamForm$ | async"
+      (saveTeam)="saveTeam($event)"
+      (addPlayer)="addPlayer()"
+      (removePlayer)="removePlayer($event)"
+    ></tb-team>
+    <mat-card>
+      {{ team$ | async | json }}
+    </mat-card>
     <router-outlet></router-outlet>
   </div>
 </div>

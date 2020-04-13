@@ -1,0 +1,61 @@
+<mat-card id="team-form">
+  <form novalidate [ngrxFormState]="team">
+    <div>
+      <mat-form-field>
+        <mat-label>Team Name</mat-label>
+        <input required matInput [ngrxFormControlState]="team.controls.name" />
+        <mat-error *ngIf="team.errors._name?.required">
+          A team name is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field style="width: 60px;">
+        <mat-label>Max Subs</mat-label>
+        <input
+          required
+          matInput
+          min="0"
+          max="5"
+          [ngrxFormControlState]="team.controls.maxSubs"
+          type="number"
+        />
+        <mat-error
+          *ngIf="
+            team.controls.maxSubs.errors?.lessThanOrEqualTo ||
+            team.controls.maxSubs.errors?.greaterThanOrEqualTo
+          "
+        >
+          Must be between 0 and 5
+        </mat-error>
+        <mat-error *ngIf="team.controls.maxSubs.errors?.tooManySubs">
+          There are
+          {{ team.controls.maxSubs.errors.tooManySubs }} too many subs
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-list
+      *ngFor="
+        let player of team.controls.players.controls;
+        trackBy: trackByIndex;
+        let i = index
+      "
+    >
+      <tb-player
+        [player]="player"
+        (removePlayer)="removePlayer.emit(i)"
+      ></tb-player>
+    </mat-list>
+    <div class="button-row">
+      <button mat-button type="button" (click)="addPlayer.emit()">
+        ADD PLAYER
+      </button>
+      <button
+        mat-button
+        type="button"
+        (click)="saveTeam.emit(team.value)"
+        [disabled]="team.isInvalid || team.isPristine"
+      >
+        SAVE TEAM
+      </button>
+    </div>
+  </form>
+</mat-card>

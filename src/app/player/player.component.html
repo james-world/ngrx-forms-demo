@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-label>Player Name</mat-label>
+  <input required matInput [ngrxFormControlState]="player.controls.name" />
+  <mat-error *ngIf="player.controls.name.isInvalid">
+    A player name is required
+  </mat-error>
+</mat-form-field>
+<mat-checkbox [ngrxFormControlState]="player.controls.isSub">Sub</mat-checkbox>
+<button mat-icon-button type="button" (click)="removePlayer.emit()">
+  <mat-icon style="font-size: 18px; vertical-align: middle;">delete</mat-icon>
+</button>
