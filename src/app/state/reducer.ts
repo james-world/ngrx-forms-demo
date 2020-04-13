@@ -67,7 +67,7 @@ const validateTeamForm = updateGroup<Team>(
         );
         return n >= 0 && n - subCount < 0
           ? { tooManySubs: subCount - n }
-          : { ...maxSubs.errors };
+          : maxSubs.errors;
       }),
   }
 );
