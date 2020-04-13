@@ -5,15 +5,7 @@
     >
   </div>
   <div class="main">
-    <tb-team
-      [team]="teamForm$ | async"
-      (saveTeam)="saveTeam($event)"
-      (addPlayer)="addPlayer()"
-      (removePlayer)="removePlayer($event)"
-    ></tb-team>
-    <mat-card>
-      {{ team$ | async | json }}
-    </mat-card>
+    <tb-team-shell></tb-team-shell>
     <router-outlet></router-outlet>
   </div>
 </div>

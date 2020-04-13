@@ -10,6 +10,8 @@ import {
   validate,
   wrapReducerWithFormStateUpdate,
   markAsPristine,
+  markAsDirty,
+  markAsTouched,
 } from 'ngrx-forms';
 import {
   required,
@@ -40,11 +42,12 @@ export interface State {
 const initialTeam: Team = {
   name: 'Albion',
   maxSubs: 2,
-  players: [
-    { name: 'Jim', isSub: false },
-    { name: 'Dave', isSub: true },
-  ],
+  players: [],
 };
+
+for (let i = 0; i < 500; i++) {
+  initialTeam.players.push({ name: `Player-${i}`, isSub: false });
+}
 
 const initialFormState = createFormGroupState<Team>(formId, initialTeam);
 
@@ -69,6 +72,12 @@ const validateTeamForm = updateGroup<Team>(
           ? { tooManySubs: subCount - n }
           : maxSubs.errors;
       }),
+  },
+  {
+    maxSubs: (maxSubs, teamForm) =>
+      maxSubs.isInvalid && maxSubs.isPristine
+        ? markAsTouched(maxSubs)
+        : maxSubs,
   }
 );
 

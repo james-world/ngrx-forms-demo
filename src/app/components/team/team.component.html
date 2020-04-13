@@ -8,7 +8,7 @@
           A team name is required
         </mat-error>
       </mat-form-field>
-      <mat-form-field style="width: 60px;">
+      <mat-form-field style="width: 90px;">
         <mat-label>Max Subs</mat-label>
         <input
           required
@@ -32,17 +32,21 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <mat-list
-      *ngFor="
-        let player of team.controls.players.controls;
-        trackBy: trackByIndex;
-        let i = index
-      "
-    >
-      <tb-player
-        [player]="player"
-        (removePlayer)="removePlayer.emit(i)"
-      ></tb-player>
+    <div class="label-row">
+      <mat-checkbox [checked]="show" (change)="show = !show"
+        >Show 10</mat-checkbox
+      >
+      <mat-label>Subs selected: {{ subCount }}</mat-label>
+    </div>
+    <mat-list>
+      <mat-list-item
+        *ngFor="let player of players; trackBy: trackByIndex; let i = index"
+      >
+        <tb-player
+          [player]="player"
+          (removePlayer)="removePlayer.emit(i)"
+        ></tb-player>
+      </mat-list-item>
     </mat-list>
     <div class="button-row">
       <button mat-button type="button" (click)="addPlayer.emit()">

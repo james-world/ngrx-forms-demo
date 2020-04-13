@@ -1,0 +1,12 @@
+<div class="team-shell">
+  <tb-team
+    [team]="teamForm$ | async"
+    [subCount]="subCount$ | async"
+    (saveTeam)="saveTeam($event)"
+    (addPlayer)="addPlayer()"
+    (removePlayer)="removePlayer($event)"
+  ></tb-team>
+  <!-- <mat-card>
+    {{ team$ | async | json }}
+  </mat-card> -->
+</div>

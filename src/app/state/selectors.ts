@@ -18,7 +18,7 @@ const selectPlayers = createSelector(
   state => state.teamForm.value.players
 );
 
-const selectSubCount = createSelector(selectPlayers, players => {
+export const selectSubCount = createSelector(selectPlayers, players => {
   return players.reduce((prev, curr) => (curr.isSub ? prev + 1 : prev), 0);
 });
 
