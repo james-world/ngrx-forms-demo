@@ -1,0 +1,21 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  height: 100vh;
+}
+
+#main-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  height: min-content;
+}
+
+#team-form {
+  width: 280px;
+}

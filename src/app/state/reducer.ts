@@ -1,9 +1,8 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import {
   createFormGroupState,
   FormGroupState,
   onNgrxForms,
-  setValue,
   addArrayControl,
   updateGroup,
   updateArray,
@@ -11,7 +10,11 @@ import {
   validate,
   wrapReducerWithFormStateUpdate,
 } from 'ngrx-forms';
-import { required } from 'ngrx-forms/validation';
+import {
+  required,
+  greaterThanOrEqualTo,
+  lessThanOrEqualTo,
+} from 'ngrx-forms/validation';
 import * as appActions from './actions';
 
 export interface Player {
@@ -42,6 +45,12 @@ const initialFormState = createFormGroupState<Team>(formId, {
 
 const validateTeamForm = updateGroup<Team>({
   name: validate(required),
+  maxSubs: validate(greaterThanOrEqualTo(0), lessThanOrEqualTo(5)),
+  players: updateArray(
+    updateGroup<Player>({
+      name: validate(required),
+    })
+  ),
 });
 
 const initialState: State = {

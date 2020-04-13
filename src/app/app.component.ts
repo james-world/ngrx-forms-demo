@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from './state/reducer';
 import { Observable } from 'rxjs';
-import { FormGroupState, FormArrayState, FormControlState } from 'ngrx-forms';
+import { FormGroupState } from 'ngrx-forms';
 import * as appActions from './state/actions';
 
 @Component({
