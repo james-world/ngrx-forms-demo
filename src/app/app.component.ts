@@ -16,6 +16,11 @@ export class AppComponent {
 
   constructor(private store: Store<{ app: fromApp.State }>) {
     this.teamForm$ = store.select(s => s.app.teamForm);
+    store
+      .select(s => s.app.teamForm.errors)
+      .subscribe({
+        next: v => console.log(v),
+      });
   }
 
   addPlayer() {

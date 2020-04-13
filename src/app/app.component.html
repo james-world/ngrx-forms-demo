@@ -1,6 +1,17 @@
 <h1>Team Form Demo</h1>
 <ng-container *ngIf="{ form: teamForm$ | async } as data">
   <form novalidate [ngrxFormState]="data.form">
+    <mat-form-field appearance="fill">
+      <mat-label>Team Name</mat-label>
+      <input
+        matInput
+        required
+        [ngrxFormControlState]="data.form.controls.name"
+      />
+      <mat-error *ngIf="data.form.errors._name?.required">
+        A team name is required
+      </mat-error>
+    </mat-form-field>
     <input type="text" [ngrxFormControlState]="data.form.controls.name" />
     <input type="number" [ngrxFormControlState]="data.form.controls.maxSubs" />
     <button type="button" (click)="addPlayer()">Add Player</button>

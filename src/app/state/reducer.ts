@@ -8,7 +8,10 @@ import {
   updateGroup,
   updateArray,
   removeArrayControl,
+  validate,
+  wrapReducerWithFormStateUpdate,
 } from 'ngrx-forms';
+import { required } from 'ngrx-forms/validation';
 import * as appActions from './actions';
 
 export interface Player {
@@ -37,11 +40,15 @@ const initialFormState = createFormGroupState<Team>(formId, {
   ],
 });
 
+const validateTeamForm = updateGroup<Team>({
+  name: validate(required),
+});
+
 const initialState: State = {
   teamForm: initialFormState,
 };
 
-export const reducer = createReducer(
+const rawReducer = createReducer(
   initialState,
   onNgrxForms(),
   on(appActions.addPlayer, state => {
@@ -60,4 +67,10 @@ export const reducer = createReducer(
     });
     return { ...state, teamForm: updateForm(state.teamForm) };
   })
+);
+
+export const reducer = wrapReducerWithFormStateUpdate(
+  rawReducer,
+  s => s.teamForm,
+  validateTeamForm
 );
