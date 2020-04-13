@@ -12,9 +12,10 @@ import * as fromApp from './state/reducer';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { CustomErrorStateMatcherDirective } from './custom-error-state-matcher.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CustomErrorStateMatcherDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
