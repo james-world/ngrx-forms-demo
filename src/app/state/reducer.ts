@@ -14,6 +14,7 @@ import {
   required,
   greaterThanOrEqualTo,
   lessThanOrEqualTo,
+  lessThan,
 } from 'ngrx-forms/validation';
 import * as appActions from './actions';
 
@@ -43,15 +44,29 @@ const initialFormState = createFormGroupState<Team>(formId, {
   ],
 });
 
-const validateTeamForm = updateGroup<Team>({
-  name: validate(required),
-  maxSubs: validate(greaterThanOrEqualTo(0), lessThanOrEqualTo(5)),
-  players: updateArray(
-    updateGroup<Player>({
-      name: validate(required),
-    })
-  ),
-});
+const validateTeamForm = updateGroup<Team>(
+  {
+    name: validate(required),
+    maxSubs: validate(greaterThanOrEqualTo(0), lessThanOrEqualTo(5)),
+    players: updateArray(
+      updateGroup<Player>({
+        name: validate(required),
+      })
+    ),
+  },
+  {
+    maxSubs: (maxSubs, teamForm) =>
+      validate(maxSubs, n => {
+        const subCount = teamForm.value.players.reduce(
+          (prev, curr) => (curr.isSub ? prev + 1 : prev),
+          0
+        );
+        return n >= 0 && n - subCount < 0
+          ? { tooManySubs: subCount - n }
+          : { ...maxSubs.errors };
+      }),
+  }
+);
 
 const initialState: State = {
   teamForm: initialFormState,

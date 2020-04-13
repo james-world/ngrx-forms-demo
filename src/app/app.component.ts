@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromApp from './state/reducer';
 import { Observable } from 'rxjs';
 import { FormGroupState } from 'ngrx-forms';
 import * as appActions from './state/actions';
+import * as appSelectors from './state/selectors';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +16,30 @@ export class AppComponent {
   title = 'TeamBuilder';
   teamForm$: Observable<FormGroupState<fromApp.Team>>;
 
-  constructor(private store: Store<{ app: fromApp.State }>) {
-    this.teamForm$ = store.select(s => s.app.teamForm);
-    store
-      .select(s => s.app.teamForm.errors)
-      .subscribe({
-        next: v => console.log(v),
-      });
+  constructor(
+    private store: Store<{ app: fromApp.State }>,
+    private snackBar: MatSnackBar
+  ) {
+    this.teamForm$ = this.store.pipe(select(appSelectors.selectTeamForm));
+
+    this.store.pipe(select(appSelectors.selectSubsRemaining)).subscribe({
+      next: v => {
+        if (v < 0) {
+          snackBar.open(`There are ${-v} too many subs selected!`, null, {
+            panelClass: 'tf-center',
+          });
+        } else {
+          snackBar.dismiss();
+        }
+      },
+    });
   }
 
   addPlayer() {
     this.store.dispatch(appActions.addPlayer());
   }
+
+  saveTeam() {}
 
   removePlayer(index: number) {
     this.store.dispatch(appActions.removePlayer({ index }));

@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CustomErrorStateMatcherDirective } from './custom-error-state-matcher.directive';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent, CustomErrorStateMatcherDirective],
@@ -42,6 +43,7 @@ import { CustomErrorStateMatcherDirective } from './custom-error-state-matcher.d
     MatDividerModule,
     MatCheckboxModule,
     MatToolbarModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

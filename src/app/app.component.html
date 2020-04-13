@@ -30,8 +30,18 @@
                 [ngrxFormControlState]="data.form.controls.maxSubs"
                 type="number"
               />
-              <mat-error *ngIf="data.form.controls.maxSubs.isInvalid">
+              <mat-error
+                *ngIf="
+                  data.form.controls.maxSubs.errors?.lessThanOrEqualTo ||
+                  data.form.controls.maxSubs.errors?.greaterThanOrEqualTo
+                "
+              >
                 Must be between 0 and 5
+              </mat-error>
+              <mat-error *ngIf="data.form.controls.maxSubs.errors?.tooManySubs">
+                There are
+                {{ data.form.controls.maxSubs.errors.tooManySubs }} too many
+                subs
               </mat-error>
             </mat-form-field>
           </div>
@@ -62,9 +72,19 @@
               >
             </button>
           </mat-list>
-          <button mat-button type="button" (click)="addPlayer()">
-            Add Player
-          </button>
+          <div class="button-row">
+            <button mat-button type="button" (click)="addPlayer()">
+              ADD PLAYER
+            </button>
+            <button
+              mat-button
+              type="button"
+              (click)="saveTeam()"
+              [disabled]="data.form.isInvalid"
+            >
+              SAVE TEAM
+            </button>
+          </div>
         </form>
       </mat-card>
     </ng-container>
