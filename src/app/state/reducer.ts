@@ -1,5 +1,15 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { createFormGroupState, FormGroupState, onNgrxForms } from 'ngrx-forms';
+import {
+  createFormGroupState,
+  FormGroupState,
+  onNgrxForms,
+  setValue,
+  addArrayControl,
+  updateGroup,
+  updateArray,
+  removeArrayControl,
+} from 'ngrx-forms';
+import * as appActions from './actions';
 
 export interface Player {
   name: string;
@@ -31,4 +41,23 @@ const initialState: State = {
   teamForm: initialFormState,
 };
 
-export const reducer = createReducer(initialState, onNgrxForms());
+export const reducer = createReducer(
+  initialState,
+  onNgrxForms(),
+  on(appActions.addPlayer, state => {
+    const playerState: Player = { name: '', isSub: false };
+
+    const addPlayer = addArrayControl<Player>(playerState);
+    const updateForm = updateGroup<Team>({
+      players: addPlayer,
+    });
+    return { ...state, teamForm: updateForm(state.teamForm) };
+  }),
+  on(appActions.removePlayer, (state, { index }) => {
+    const removePlayer = removeArrayControl(index);
+    const updateForm = updateGroup<Team>({
+      players: removePlayer,
+    });
+    return { ...state, teamForm: updateForm(state.teamForm) };
+  })
+);

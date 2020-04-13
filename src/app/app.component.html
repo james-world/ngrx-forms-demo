@@ -3,9 +3,17 @@
   <form novalidate [ngrxFormState]="data.form">
     <input type="text" [ngrxFormControlState]="data.form.controls.name" />
     <input type="number" [ngrxFormControlState]="data.form.controls.maxSubs" />
-    <div *ngFor="let player of data.form.controls.players.controls">
+    <button type="button" (click)="addPlayer()">Add Player</button>
+    <div
+      *ngFor="
+        let player of data.form.controls.players.controls;
+        trackBy: trackByIndex;
+        let i = index
+      "
+    >
       <input type="text" [ngrxFormControlState]="player.controls.name" />
       <input type="checkbox" [ngrxFormControlState]="player.controls.isSub" />
+      <button type="button" (click)="removePlayer(i)">Remove Player</button>
     </div>
   </form>
 </ng-container>

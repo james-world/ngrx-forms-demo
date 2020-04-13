@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from './state/reducer';
 import { Observable } from 'rxjs';
 import { FormGroupState, FormArrayState, FormControlState } from 'ngrx-forms';
+import * as appActions from './state/actions';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,17 @@ export class AppComponent {
 
   constructor(private store: Store<{ app: fromApp.State }>) {
     this.teamForm$ = store.select(s => s.app.teamForm);
-    this.teamForm$.subscribe({
-      next: v => console.log(v),
-    });
+  }
+
+  addPlayer() {
+    this.store.dispatch(appActions.addPlayer());
+  }
+
+  removePlayer(index: number) {
+    this.store.dispatch(appActions.removePlayer({ index }));
+  }
+
+  trackByIndex(index: number) {
+    return index;
   }
 }
