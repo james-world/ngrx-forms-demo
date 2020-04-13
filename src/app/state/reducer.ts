@@ -19,9 +19,12 @@ export interface State {
 }
 
 const initialFormState = createFormGroupState<Team>(formId, {
-  name: '',
+  name: 'Albion',
   maxSubs: 2,
-  players: [],
+  players: [
+    { name: 'Jim', isSub: false },
+    { name: 'Dave', isSub: true },
+  ],
 });
 
 const initialState: State = {
