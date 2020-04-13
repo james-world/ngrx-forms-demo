@@ -37,3 +37,5 @@ export const selectSubsRemaining = createSelector(
     }
   }
 );
+
+export const selectTeam = createSelector(selectApp, state => state.team);

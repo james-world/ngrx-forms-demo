@@ -9,6 +9,7 @@ import {
   removeArrayControl,
   validate,
   wrapReducerWithFormStateUpdate,
+  markAsPristine,
 } from 'ngrx-forms';
 import {
   required,
@@ -33,16 +34,19 @@ const formId = 'TeamForm';
 
 export interface State {
   teamForm: FormGroupState<Team>;
+  team: Team;
 }
 
-const initialFormState = createFormGroupState<Team>(formId, {
+const initialTeam: Team = {
   name: 'Albion',
   maxSubs: 2,
   players: [
     { name: 'Jim', isSub: false },
     { name: 'Dave', isSub: true },
   ],
-});
+};
+
+const initialFormState = createFormGroupState<Team>(formId, initialTeam);
 
 const validateTeamForm = updateGroup<Team>(
   {
@@ -70,6 +74,7 @@ const validateTeamForm = updateGroup<Team>(
 
 const initialState: State = {
   teamForm: initialFormState,
+  team: initialTeam,
 };
 
 const rawReducer = createReducer(
@@ -90,7 +95,12 @@ const rawReducer = createReducer(
       players: removePlayer,
     });
     return { ...state, teamForm: updateForm(state.teamForm) };
-  })
+  }),
+  on(appActions.saveTeam, (state, { team }) => ({
+    ...state,
+    team,
+    teamForm: markAsPristine(state.teamForm),
+  }))
 );
 
 export const reducer = wrapReducerWithFormStateUpdate(
