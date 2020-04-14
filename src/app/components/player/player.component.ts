@@ -19,7 +19,9 @@ export class PlayerComponent implements OnInit {
   @Input() player: FormGroupState<Player>;
   @Output() removePlayer = new EventEmitter<void>();
 
-  constructor() {}
+  constructor() {
+    console.log('I constructed!');
+  }
 
   ngOnInit(): void {}
 }

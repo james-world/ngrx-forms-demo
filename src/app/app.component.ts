@@ -20,6 +20,7 @@ export class AppComponent {
         if (v < 0) {
           snackBar.open(`There are ${-v} too many subs selected!`, null, {
             panelClass: 'tf-center',
+            horizontalPosition: 'left',
           });
         } else {
           snackBar.dismiss();

@@ -33,19 +33,22 @@
       </mat-form-field>
     </div>
     <div class="label-row">
-      <mat-checkbox [checked]="show" (change)="show = !show"
-        >Show 10</mat-checkbox
+      <mat-checkbox
+        [checked]="virtualScroll"
+        (change)="virtualScroll = !virtualScroll"
+        >Virtual Scroll</mat-checkbox
       >
       <mat-label>Subs selected: {{ subCount }}</mat-label>
     </div>
     <cdk-virtual-scroll-viewport
+      *ngIf="virtualScroll"
       style="height: 300px; padding: 10px;"
       itemSize="50"
     >
       <mat-list>
         <mat-list-item
           *cdkVirtualFor="
-            let player of players;
+            let player of team.controls.players.controls;
             trackBy: trackByIndex;
             let i = index
           "
@@ -56,6 +59,20 @@
           ></tb-player>
         </mat-list-item> </mat-list
     ></cdk-virtual-scroll-viewport>
+    <mat-list *ngIf="!virtualScroll">
+      <mat-list-item
+        *ngFor="
+          let player of team.controls.players.controls;
+          trackBy: trackByIndex;
+          let i = index
+        "
+      >
+        <tb-player
+          [player]="player"
+          (removePlayer)="removePlayer.emit(i)"
+        ></tb-player>
+      </mat-list-item>
+    </mat-list>
     <div class="button-row">
       <button mat-button type="button" (click)="addPlayer.emit()">
         ADD PLAYER
