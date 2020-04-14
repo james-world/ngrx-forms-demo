@@ -41,6 +41,7 @@
       <mat-label>Subs selected: {{ subCount }}</mat-label>
     </div>
     <cdk-virtual-scroll-viewport
+      #viewport
       *ngIf="virtualScroll"
       style="height: 300px; padding: 10px;"
       itemSize="50"
@@ -86,5 +87,13 @@
         SAVE TEAM
       </button>
     </div>
+    <button
+      *ngIf="virtualScroll"
+      mat-button
+      type="button"
+      (click)="scrollToIndex(300)"
+    >
+      SCROLL TEST
+    </button>
   </form>
 </mat-card>

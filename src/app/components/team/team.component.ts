@@ -4,9 +4,11 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
+  ViewChild,
 } from '@angular/core';
-import { FormGroupState, FormArrayState } from 'ngrx-forms';
-import { Team, Player } from '../../state/reducer';
+import { FormGroupState } from 'ngrx-forms';
+import { Team } from '../../state/reducer';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'tb-team',
@@ -20,10 +22,15 @@ export class TeamComponent {
   @Output() addPlayer = new EventEmitter<void>();
   @Output() removePlayer = new EventEmitter<number>();
   @Output() saveTeam = new EventEmitter<Team>();
+  @ViewChild('viewport') viewport: CdkVirtualScrollViewport;
 
   virtualScroll = false;
 
   trackByIndex(index: number) {
     return index;
+  }
+
+  scrollToIndex(index: number) {
+    this.viewport.scrollToIndex(index);
   }
 }
