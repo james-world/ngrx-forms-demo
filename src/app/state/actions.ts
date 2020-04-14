@@ -10,3 +10,7 @@ export const saveTeam = createAction(
   '[Team Form] Save Team',
   props<{ team: Team }>()
 );
+export const initializeTeam = createAction(
+  '[Team Form] Initialize Team',
+  props<{ size: number }>()
+);

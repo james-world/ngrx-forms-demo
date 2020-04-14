@@ -12,6 +12,7 @@ import {
   markAsPristine,
   markAsDirty,
   markAsTouched,
+  setValue,
 } from 'ngrx-forms';
 import {
   required,
@@ -39,15 +40,21 @@ export interface State {
   team: Team;
 }
 
-const initialTeam: Team = {
-  name: 'Albion',
-  maxSubs: 2,
-  players: [],
-};
+function initializeTeam(size: number): Team {
+  const team: Team = {
+    name: 'Albion',
+    maxSubs: 2,
+    players: [],
+  };
 
-for (let i = 0; i < 500; i++) {
-  initialTeam.players.push({ name: `Player-${i}`, isSub: false });
+  for (let i = 0; i < size; i++) {
+    team.players.push({ name: `Player-${i}`, isSub: false });
+  }
+
+  return team;
 }
+
+const initialTeam: Team = initializeTeam(10);
 
 const initialFormState = createFormGroupState<Team>(formId, initialTeam);
 
@@ -109,7 +116,17 @@ const rawReducer = createReducer(
     ...state,
     team,
     teamForm: markAsPristine(state.teamForm),
-  }))
+  })),
+  on(appActions.initializeTeam, (state, { size }) => {
+    const team = initializeTeam(size);
+    const teamForm = createFormGroupState<Team>(formId, team);
+
+    return {
+      ...state,
+      team,
+      teamForm,
+    };
+  })
 );
 
 export const reducer = wrapReducerWithFormStateUpdate(
