@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PlayerComponent } from './components/player/player.component';
 import { TeamComponent } from './components/team/team.component';
 import { TeamShellComponent } from './components/team-shell/team-shell.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { TeamShellComponent } from './components/team-shell/team-shell.component
     MatCheckboxModule,
     MatToolbarModule,
     MatSnackBarModule,
+    ScrollingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

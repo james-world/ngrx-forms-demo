@@ -38,16 +38,24 @@
       >
       <mat-label>Subs selected: {{ subCount }}</mat-label>
     </div>
-    <mat-list>
-      <mat-list-item
-        *ngFor="let player of players; trackBy: trackByIndex; let i = index"
-      >
-        <tb-player
-          [player]="player"
-          (removePlayer)="removePlayer.emit(i)"
-        ></tb-player>
-      </mat-list-item>
-    </mat-list>
+    <cdk-virtual-scroll-viewport
+      style="height: 300px; padding: 10px;"
+      itemSize="50"
+    >
+      <mat-list>
+        <mat-list-item
+          *cdkVirtualFor="
+            let player of players;
+            trackBy: trackByIndex;
+            let i = index
+          "
+        >
+          <tb-player
+            [player]="player"
+            (removePlayer)="removePlayer.emit(i)"
+          ></tb-player>
+        </mat-list-item> </mat-list
+    ></cdk-virtual-scroll-viewport>
     <div class="button-row">
       <button mat-button type="button" (click)="addPlayer.emit()">
         ADD PLAYER

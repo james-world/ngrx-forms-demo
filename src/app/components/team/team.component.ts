@@ -21,7 +21,7 @@ export class TeamComponent {
   @Output() removePlayer = new EventEmitter<number>();
   @Output() saveTeam = new EventEmitter<Team>();
 
-  show = true;
+  show = false;
 
   public get players(): readonly FormGroupState<Player>[] {
     if (this.show) {
