@@ -25,6 +25,7 @@ import { PlayerComponent } from './components/player/player.component';
 import { TeamComponent } from './components/team/team.component';
 import { TeamShellComponent } from './components/team-shell/team-shell.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TeamMakerComponent } from './components/team-maker/team-maker.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     PlayerComponent,
     TeamComponent,
     TeamShellComponent,
+    TeamMakerComponent,
   ],
   imports: [
     BrowserModule,

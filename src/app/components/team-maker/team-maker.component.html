@@ -1,0 +1,14 @@
+<mat-card class="team-maker">
+  <mat-form-field>
+    <mat-label>Number of players</mat-label>
+    <input
+      required
+      matInput
+      [value]="numPlayers"
+      (input)="numPlayers = $event.target.value"
+    />
+  </mat-form-field>
+  <button mat-button type="button" (click)="initializeTeam()">
+    Initialize Team
+  </button>
+</mat-card>
