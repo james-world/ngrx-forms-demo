@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   ChangeDetectionStrategy,
@@ -15,13 +14,11 @@ import { Player } from '../../state/reducer';
   styleUrls: ['./player.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent {
   @Input() player: FormGroupState<Player>;
   @Output() removePlayer = new EventEmitter<void>();
 
   constructor() {
-    console.log('I constructed!');
+    console.log('Played compoment constructed');
   }
-
-  ngOnInit(): void {}
 }
