@@ -54,7 +54,7 @@ function initializeTeam(size: number): Team {
   return team;
 }
 
-const initialTeam: Team = initializeTeam(10);
+const initialTeam: Team = initializeTeam(5);
 
 const initialFormState = createFormGroupState<Team>(formId, initialTeam);
 

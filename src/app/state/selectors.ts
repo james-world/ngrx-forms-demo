@@ -1,6 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { State } from './reducer';
-import { isNumber } from 'util';
 
 export interface AppState {
   app: State;
