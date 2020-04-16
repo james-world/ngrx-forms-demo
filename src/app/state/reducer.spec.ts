@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
-import { reducer, Team, State } from './reducer';
+import { reducer, Team, State, formId } from './reducer';
 import * as appActions from './actions';
-import { createFormGroupState } from 'ngrx-forms';
+import { createFormGroupState, SetValueAction } from 'ngrx-forms';
 
 const initialTeam: Team = {
   name: 'Albion',
@@ -62,5 +62,23 @@ describe('reducer', () => {
     };
 
     expect(newState.teamForm.value).toEqual(expectedTeam);
+  });
+
+  test('undoChanges restores teamForm from original value', () => {
+    const newTeam: Team = {
+      name: 'Rangers',
+      maxSubs: 4,
+      players: [{ name: 'Jimmy', isSub: true }],
+    };
+
+    const editedState = reducer(
+      initialState,
+      new SetValueAction(formId, newTeam)
+    );
+    expect(editedState.teamForm.value).toEqual(newTeam);
+
+    const restoredState = reducer(editedState, appActions.undoChanges);
+
+    expect(restoredState.teamForm.value).toEqual(initialTeam);
   });
 });

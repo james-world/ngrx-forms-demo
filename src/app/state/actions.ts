@@ -15,3 +15,4 @@ export const initializeTeam = createAction(
   props<{ size: number }>()
 );
 export const checkTeamName = createAction('[Team Form] Check Team Name');
+export const undoChanges = createAction('[Team Form] Undo Changes');

@@ -123,6 +123,12 @@ const rawReducer = createReducer(
       team,
       teamForm,
     };
+  }),
+  on(appActions.undoChanges, state => {
+    return {
+      ...state,
+      teamForm: createFormGroupState<Team>(formId, state.team),
+    };
   })
 );
 
