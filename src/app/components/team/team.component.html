@@ -7,6 +7,9 @@
         <mat-error *ngIf="team.errors._name?.required">
           A team name is required
         </mat-error>
+        <mat-error *ngIf="team.errors._name?.$checkTeamName">
+          A team name can't include an expletive
+        </mat-error>
       </mat-form-field>
       <mat-form-field style="width: 90px;">
         <mat-label>Max Subs</mat-label>
@@ -82,7 +85,9 @@
         mat-button
         type="button"
         (click)="saveTeam.emit(team.value)"
-        [disabled]="team.isInvalid || team.isPristine"
+        [disabled]="
+          team.isInvalid || team.isPristine || team.isValidationPending
+        "
       >
         SAVE TEAM
       </button>

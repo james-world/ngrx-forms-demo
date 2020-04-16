@@ -14,3 +14,4 @@ export const initializeTeam = createAction(
   '[Team Form] Initialize Team',
   props<{ size: number }>()
 );
+export const checkTeamName = createAction('[Team Form] Check Team Name');

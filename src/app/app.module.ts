@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 import { NgrxFormsModule } from 'ngrx-forms';
 import * as fromApp from './state/reducer';
 
@@ -26,6 +27,7 @@ import { TeamComponent } from './components/team/team.component';
 import { TeamShellComponent } from './components/team-shell/team-shell.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TeamMakerComponent } from './components/team-maker/team-maker.component';
+import { AppEffects } from './state/effects';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { TeamMakerComponent } from './components/team-maker/team-maker.component
       maxAge: 25,
       logOnly: false,
     }),
+    EffectsModule.forRoot([AppEffects]),
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,

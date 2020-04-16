@@ -10,15 +10,12 @@ import {
   validate,
   wrapReducerWithFormStateUpdate,
   markAsPristine,
-  markAsDirty,
   markAsTouched,
-  setValue,
 } from 'ngrx-forms';
 import {
   required,
   greaterThanOrEqualTo,
   lessThanOrEqualTo,
-  lessThan,
 } from 'ngrx-forms/validation';
 import * as appActions from './actions';
 
@@ -33,7 +30,7 @@ export interface Team {
   players: Player[];
 }
 
-const formId = 'TeamForm';
+export const formId = 'TeamForm';
 
 export interface State {
   teamForm: FormGroupState<Team>;
