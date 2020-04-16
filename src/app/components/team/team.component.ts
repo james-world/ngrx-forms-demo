@@ -22,6 +22,7 @@ export class TeamComponent {
   @Output() addPlayer = new EventEmitter<void>();
   @Output() removePlayer = new EventEmitter<number>();
   @Output() saveTeam = new EventEmitter<Team>();
+  @Output() cancel = new EventEmitter<Team>();
   @ViewChild('viewport') viewport: CdkVirtualScrollViewport;
 
   virtualScroll = false;

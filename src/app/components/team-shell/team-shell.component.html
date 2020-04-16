@@ -6,6 +6,7 @@
     (saveTeam)="saveTeam($event)"
     (addPlayer)="addPlayer()"
     (removePlayer)="removePlayer($event)"
+    (cancel)="undoChanges()"
   ></tb-team>
   <!-- <mat-card>
     {{ team$ | async | json }}

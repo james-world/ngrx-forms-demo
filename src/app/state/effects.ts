@@ -19,7 +19,7 @@ const nameControlId = `${formId}.name`;
 
 function validateNameAsync(name: string): Observable<Action> {
   const result = name.toLocaleLowerCase().includes('poo')
-    ? new SetAsyncErrorAction(nameControlId, 'checkTeamName', true)
+    ? appActions.checkTeamNameFailed({ name })
     : new ClearAsyncErrorAction(nameControlId, 'checkTeamName');
   return of(result).pipe(delay(3000));
 }

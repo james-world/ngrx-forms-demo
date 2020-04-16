@@ -11,6 +11,7 @@ import {
   wrapReducerWithFormStateUpdate,
   markAsPristine,
   markAsTouched,
+  setAsyncError,
 } from 'ngrx-forms';
 import {
   required,
@@ -18,6 +19,7 @@ import {
   lessThanOrEqualTo,
 } from 'ngrx-forms/validation';
 import * as appActions from './actions';
+import { selectTeamForm } from './selectors';
 
 export interface Player {
   name: string;
@@ -129,6 +131,19 @@ const rawReducer = createReducer(
       ...state,
       teamForm: createFormGroupState<Team>(formId, state.team),
     };
+  }),
+  on(appActions.checkTeamNameFailed, (state, { name }) => {
+    if (state.teamForm.controls.name.value === name) {
+      const teamForm = updateGroup<Team>(state.teamForm, {
+        name: setAsyncError('checkTeamName', name),
+      });
+      return {
+        ...state,
+        teamForm,
+      };
+    } else {
+      return state;
+    }
   })
 );
 

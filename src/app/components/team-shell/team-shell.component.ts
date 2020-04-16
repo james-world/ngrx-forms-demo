@@ -37,6 +37,10 @@ export class TeamShellComponent implements OnInit {
     this.store.dispatch(appActions.removePlayer({ index }));
   }
 
+  undoChanges() {
+    this.store.dispatch(appActions.undoChanges());
+  }
+
   trackByIndex(index: number) {
     return index;
   }

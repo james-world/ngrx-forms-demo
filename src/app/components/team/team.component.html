@@ -84,6 +84,14 @@
       <button
         mat-button
         type="button"
+        (click)="cancel.emit()"
+        [disabled]="team.isPristine"
+      >
+        CANCEL
+      </button>
+      <button
+        mat-button
+        type="button"
         (click)="saveTeam.emit(team.value)"
         [disabled]="
           team.isInvalid || team.isPristine || team.isValidationPending

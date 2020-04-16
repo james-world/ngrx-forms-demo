@@ -16,3 +16,7 @@ export const initializeTeam = createAction(
 );
 export const checkTeamName = createAction('[Team Form] Check Team Name');
 export const undoChanges = createAction('[Team Form] Undo Changes');
+export const checkTeamNameFailed = createAction(
+  '[Team Form] Check Team Name Failed',
+  props<{ name: string }>()
+);
