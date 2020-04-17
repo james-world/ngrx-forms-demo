@@ -7,13 +7,12 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import {
   StartAsyncValidationAction,
-  SetAsyncErrorAction,
   ClearAsyncErrorAction,
   SetValueAction,
 } from 'ngrx-forms';
 import * as appActions from './actions';
 
-import { formId, State } from './reducer';
+import { formId, State } from './model';
 
 const nameControlId = `${formId}.name`;
 

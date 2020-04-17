@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormGroupState } from 'ngrx-forms';
-import { Team } from '../../state/reducer';
+import { Team } from '../../state/model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({

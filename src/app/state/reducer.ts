@@ -19,42 +19,9 @@ import {
   lessThanOrEqualTo,
 } from 'ngrx-forms/validation';
 import * as appActions from './actions';
-import { selectTeamForm } from './selectors';
+import { Player, Team, State, formId, createTeam } from './model';
 
-export interface Player {
-  name: string;
-  isSub: boolean;
-}
-
-export interface Team {
-  name: string;
-  maxSubs: number;
-  players: Player[];
-}
-
-export const formId = 'TeamForm';
-
-export interface State {
-  teamForm: FormGroupState<Team>;
-  team: Team;
-}
-
-function initializeTeam(size: number): Team {
-  const team: Team = {
-    name: 'Albion',
-    maxSubs: 2,
-    players: [],
-  };
-
-  for (let i = 0; i < size; i++) {
-    team.players.push({ name: `Player-${i}`, isSub: false });
-  }
-
-  return team;
-}
-
-const initialTeam: Team = initializeTeam(5);
-
+const initialTeam: Team = createTeam(5);
 const initialFormState = createFormGroupState<Team>(formId, initialTeam);
 
 const validateTeamForm = updateGroup<Team>(
@@ -117,7 +84,7 @@ const rawReducer = createReducer(
     teamForm: markAsPristine(state.teamForm),
   })),
   on(appActions.initializeTeam, (state, { size }) => {
-    const team = initializeTeam(size);
+    const team = createTeam(size);
     const teamForm = createFormGroupState<Team>(formId, team);
 
     return {

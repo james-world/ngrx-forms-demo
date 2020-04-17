@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import * as fromApp from './state/reducer';
+import { State } from './state/model';
 import * as appSelectors from './state/selectors';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
@@ -12,10 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AppComponent {
   title = 'TeamBuilder';
 
-  constructor(
-    private store: Store<{ app: fromApp.State }>,
-    snackBar: MatSnackBar
-  ) {
+  constructor(private store: Store<{ app: State }>, snackBar: MatSnackBar) {
     this.store.pipe(select(appSelectors.selectSubsRemaining)).subscribe({
       next: v => {
         if (v < 0) {

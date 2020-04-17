@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Team } from './reducer';
+import { Team } from './model';
 
 export const addPlayer = createAction('[Team Form] Add Player');
 export const removePlayer = createAction(

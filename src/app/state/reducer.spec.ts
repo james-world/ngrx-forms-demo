@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
-import { reducer, Team, State, formId } from './reducer';
+import { reducer } from './reducer';
+import { Team, formId } from './model';
 import * as appActions from './actions';
 import { createFormGroupState, SetValueAction } from 'ngrx-forms';
 

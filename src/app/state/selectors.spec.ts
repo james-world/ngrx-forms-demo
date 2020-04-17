@@ -1,6 +1,6 @@
 import * as selectors from './selectors';
 import { createFormGroupState } from 'ngrx-forms';
-import { Team } from './reducer';
+import { Team } from './model';
 
 const initialTeam: Team = {
   name: 'Albion',

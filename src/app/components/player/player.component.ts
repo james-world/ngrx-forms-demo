@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormGroupState } from 'ngrx-forms';
 import { EventEmitter } from '@angular/core';
-import { Player } from '../../state/reducer';
+import { Player } from '../../state/model';
 
 @Component({
   selector: 'tb-player',
