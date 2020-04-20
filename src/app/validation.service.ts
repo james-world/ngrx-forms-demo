@@ -9,11 +9,11 @@ export type ValidationResult = { name: string; expletive?: true };
 })
 export class ValidationService {
   checkName(name: string): Observable<ValidationResult> {
+    console.log('Check Name Invoked!');
     return timer(3000).pipe(mapTo(name), map(this.checkNameImpl));
   }
 
   private checkNameImpl(name: string): ValidationResult {
-    console.log(name);
     return name.toLowerCase().includes('poo')
       ? { expletive: true, name }
       : { name };

@@ -5,14 +5,12 @@ import {
   setAsyncError,
   SetValueAction,
   ClearAsyncErrorAction,
-  StartAsyncValidationAction,
   onNgrxFormsAction,
   clearAsyncError,
   startAsyncValidation,
 } from 'ngrx-forms';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
-import { Observable, of, concat } from 'rxjs';
-import { delay, filter, switchMap, concatMap } from 'rxjs/operators';
+import { filter, switchMap, map, debounceTime } from 'rxjs/operators';
 import {
   ValidationService,
   ValidationResult,
@@ -69,14 +67,12 @@ export const checkTeamNameFailedReducer: On<State> = on(
 
 /* EFFECTS */
 
-function validationResultToAction(
-  result: ValidationResult
-): Observable<Action> {
-  const res = result.expletive
-    ? checkTeamNameFailedAction({ name: result.name })
-    : new ClearAsyncErrorAction(nameControlId, 'checkTeamName');
-
-  return of(res).pipe(delay(3000));
+function validationResultToAction(result: ValidationResult): Action {
+  if (result.expletive) {
+    return checkTeamNameFailedAction({ name: result.name });
+  } else {
+    return new ClearAsyncErrorAction(nameControlId, 'checkTeamName');
+  }
 }
 
 export const checkTeamNameEffect$ = (
@@ -87,10 +83,11 @@ export const checkTeamNameEffect$ = (
     action$.pipe(
       ofType<SetValueAction<string>>(SetValueAction.TYPE),
       filter(setValue => setValue.controlId === nameControlId),
+      debounceTime(1000), // Only trigger validation call if there's been no changes for a second
       switchMap(setValue =>
         validationService
           .checkName(setValue.value)
-          .pipe(concatMap(validationResultToAction))
+          .pipe(map(validationResultToAction))
       )
     )
   );
