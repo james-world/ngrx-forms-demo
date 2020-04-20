@@ -6,10 +6,19 @@ import {
   SetValueAction,
   ClearAsyncErrorAction,
   StartAsyncValidationAction,
+  onNgrxFormsAction,
+  clearAsyncError,
+  startAsyncValidation,
 } from 'ngrx-forms';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { Observable, of, concat } from 'rxjs';
-import { delay, filter, switchMap } from 'rxjs/operators';
+import { delay, filter, switchMap, concatMap } from 'rxjs/operators';
+import {
+  ValidationService,
+  ValidationResult,
+} from 'src/app/validation.service';
+
+const nameControlId = `${formId}.name`;
 
 /* ACTIONS */
 
@@ -20,6 +29,26 @@ export const checkTeamNameFailedAction = createAction(
 );
 
 /* REDUCERS */
+
+export const checkTeamNameReducer: On<State> = onNgrxFormsAction(
+  SetValueAction,
+  (state, action) => {
+    if (action.controlId === nameControlId) {
+      const clearTeamNameAsyncErrors = updateGroup<Team>(
+        {
+          name: clearAsyncError('checkTeamName'),
+        },
+        {
+          name: startAsyncValidation('checkTeamName'),
+        }
+      );
+
+      return { ...state, teamForm: clearTeamNameAsyncErrors(state.teamForm) };
+    } else {
+      return state;
+    }
+  }
+);
 
 export const checkTeamNameFailedReducer: On<State> = on(
   checkTeamNameFailedAction,
@@ -40,33 +69,28 @@ export const checkTeamNameFailedReducer: On<State> = on(
 
 /* EFFECTS */
 
-const nameControlId = `${formId}.name`;
-
-function validateNameAsync(name: string): Observable<Action> {
-  const result = name.toLocaleLowerCase().includes('poo')
-    ? checkTeamNameFailedAction({ name })
+function validationResultToAction(
+  result: ValidationResult
+): Observable<Action> {
+  const res = result.expletive
+    ? checkTeamNameFailedAction({ name: result.name })
     : new ClearAsyncErrorAction(nameControlId, 'checkTeamName');
-  return of(result).pipe(delay(3000));
+
+  return of(res).pipe(delay(3000));
 }
 
-function setValidating(): Observable<Action> {
-  return of(
-    new ClearAsyncErrorAction(nameControlId, 'checkTeamName'),
-    new StartAsyncValidationAction(nameControlId, 'checkTeamName')
-  );
-}
-
-export const checkTeamNameEffect$ = (action$: Actions) =>
+export const checkTeamNameEffect$ = (
+  action$: Actions,
+  validationService: ValidationService
+) =>
   createEffect(() =>
     action$.pipe(
       ofType<SetValueAction<string>>(SetValueAction.TYPE),
       filter(setValue => setValue.controlId === nameControlId),
       switchMap(setValue =>
-        concat(
-          of(checkTeamNameAction()),
-          setValidating(),
-          validateNameAsync(setValue.value)
-        )
+        validationService
+          .checkName(setValue.value)
+          .pipe(concatMap(validationResultToAction))
       )
     )
   );

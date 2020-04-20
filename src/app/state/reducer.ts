@@ -10,7 +10,10 @@ import { addPlayerReducer } from './teamForm/addPlayer';
 import { undoChangesReducer } from './teamForm/undoChanges';
 import { saveTeamReducer } from './teamForm/saveTeam';
 import { removePlayerReducer } from './teamForm/removePlayer';
-import { checkTeamNameFailedReducer } from './teamForm/checkTeamName';
+import {
+  checkTeamNameFailedReducer,
+  checkTeamNameReducer,
+} from './teamForm/checkTeamName';
 import { initializeTeamReducer } from './teamForm/initializeTeam';
 import { validateTeamForm } from './teamForm/validation';
 
@@ -26,6 +29,7 @@ export const rawReducer = createReducer(
   initialState,
   onNgrxForms(),
   addPlayerReducer,
+  checkTeamNameReducer,
   checkTeamNameFailedReducer,
   removePlayerReducer,
   saveTeamReducer,
