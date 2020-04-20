@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/model';
-import * as appActions from 'src/app/state/actions';
+import { actions } from 'src/app/state';
 
 @Component({
   selector: 'tb-team-maker',
@@ -14,6 +14,6 @@ export class TeamMakerComponent {
   constructor(private store: Store<State>) {}
 
   initializeTeam() {
-    this.store.dispatch(appActions.initializeTeam({ size: this.numPlayers }));
+    this.store.dispatch(actions.initializeTeam({ size: this.numPlayers }));
   }
 }

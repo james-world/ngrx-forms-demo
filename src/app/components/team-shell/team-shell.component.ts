@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Team, State } from '../../state/model';
 import { Observable } from 'rxjs';
 import { FormGroupState } from 'ngrx-forms';
-import * as appActions from '../../state/actions';
+import { actions } from '../../state';
 import * as appSelectors from '../../state/selectors';
 
 @Component({
@@ -26,19 +26,19 @@ export class TeamShellComponent implements OnInit {
   }
 
   addPlayer() {
-    this.store.dispatch(appActions.addPlayer());
+    this.store.dispatch(actions.addPlayer());
   }
 
   saveTeam(team: Team) {
-    this.store.dispatch(appActions.saveTeam({ team }));
+    this.store.dispatch(actions.saveTeam({ team }));
   }
 
   removePlayer(index: number) {
-    this.store.dispatch(appActions.removePlayer({ index }));
+    this.store.dispatch(actions.removePlayer({ index }));
   }
 
   undoChanges() {
-    this.store.dispatch(appActions.undoChanges());
+    this.store.dispatch(actions.undoChanges());
   }
 
   trackByIndex(index: number) {
