@@ -25,6 +25,7 @@ export class TeamComponent {
   @Output() cancel = new EventEmitter<Team>();
   @ViewChild('viewport') viewport: CdkVirtualScrollViewport;
 
+  hidePlayers = false;
   virtualScroll = false;
 
   trackByIndex(index: number) {

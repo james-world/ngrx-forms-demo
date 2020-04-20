@@ -41,11 +41,16 @@
         (change)="virtualScroll = !virtualScroll"
         >Virtual Scroll</mat-checkbox
       >
+      <mat-checkbox
+        [checked]="hidePlayers"
+        (change)="hidePlayers = !hidePlayers"
+        >Hide players</mat-checkbox
+      >
       <mat-label>Subs selected: {{ subCount }}</mat-label>
     </div>
     <cdk-virtual-scroll-viewport
       #viewport
-      *ngIf="virtualScroll"
+      *ngIf="virtualScroll && !hidePlayers"
       style="height: 300px; padding: 10px;"
       itemSize="70"
     >
@@ -63,7 +68,7 @@
           ></tb-player>
         </mat-list-item> </mat-list
     ></cdk-virtual-scroll-viewport>
-    <mat-list *ngIf="!virtualScroll">
+    <mat-list *ngIf="!virtualScroll && !hidePlayers">
       <mat-list-item
         *ngFor="
           let player of team.controls.players.controls;

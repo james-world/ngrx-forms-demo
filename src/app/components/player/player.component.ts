@@ -19,6 +19,6 @@ export class PlayerComponent {
   @Output() removePlayer = new EventEmitter<void>();
 
   constructor() {
-    console.log('Played compoment constructed');
+    console.log('Player compoment constructed');
   }
 }
