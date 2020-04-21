@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/model';
-import { actions } from 'src/app/state';
+import * as actions from '../../state/actions';
 
 @Component({
   selector: 'tb-team-maker',

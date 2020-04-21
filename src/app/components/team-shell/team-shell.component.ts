@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Team, State } from '../../state/model';
 import { Observable } from 'rxjs';
 import { FormGroupState } from 'ngrx-forms';
-import { actions } from '../../state';
+import * as actions from '../../state/actions';
 import * as appSelectors from '../../state/selectors';
 
 @Component({
