@@ -11,7 +11,7 @@ import {
   checkTeamNameFailedReducer,
   checkTeamNameFailedAction,
   checkTeamNameEffect$,
-} from './checkTeamName';
+} from './check-team-name';
 import { createReducer } from '@ngrx/store';
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
 import { ValidationService } from 'src/app/validation.service';

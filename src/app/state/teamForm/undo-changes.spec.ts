@@ -1,6 +1,6 @@
 import { Team, formId } from '../model';
 import { SetValueAction, createFormGroupState, onNgrxForms } from 'ngrx-forms';
-import { undoChangesReducer, undoChangesAction } from './undoChanges';
+import { undoChangesReducer, undoChangesAction } from './undo-changes';
 import { createReducer } from '@ngrx/store';
 
 const initialTeam: Team = {

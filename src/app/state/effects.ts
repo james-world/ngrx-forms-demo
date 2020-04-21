@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions } from '@ngrx/effects';
-import { checkTeamNameEffect$ } from './teamForm/checkTeamName';
+import { checkTeamNameEffect$ } from './teamForm/check-team-name';
 import { ValidationService } from '../validation.service';
 
 @Injectable()

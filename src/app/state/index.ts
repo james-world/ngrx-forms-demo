@@ -1,12 +1,12 @@
-import { addPlayerAction } from './teamForm/addPlayer';
+import { addPlayerAction } from './teamForm/add-player';
 import {
   checkTeamNameAction,
   checkTeamNameFailedAction,
-} from './teamForm/checkTeamName';
-import { removePlayerAction } from './teamForm/removePlayer';
-import { saveTeamAction } from './teamForm/saveTeam';
-import { undoChangesAction } from './teamForm/undoChanges';
-import { initializeTeamAction } from './teamForm/initializeTeam';
+} from './teamForm/check-team-name';
+import { removePlayerAction } from './teamForm/remove-player';
+import { saveTeamAction } from './teamForm/save-team';
+import { undoChangesAction } from './teamForm/undo-changes';
+import { initializeTeamAction } from './teamForm/initialize-team';
 
 export const actions = {
   addPlayer: addPlayerAction,

@@ -1,6 +1,6 @@
 import { Team } from '../model';
 import { createFormGroupState } from 'ngrx-forms';
-import { initializeTeamReducer, initializeTeamAction } from './initializeTeam';
+import { initializeTeamReducer, initializeTeamAction } from './initialize-team';
 import { createReducer } from '@ngrx/store';
 
 const initialTeam: Team = {
