@@ -83,7 +83,11 @@ test('checkTeamNameReducers set error when team name validation fails', () => {
   });
 });
 
-test('checkTeamNameEffect$ debounces correctly, and sends most recent of close edits', () => {
+/* The rest of these tests using "marble testing" to check the behaviour of the effect
+ * See https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing for details.
+ */
+
+test('checkTeamNameEffect$ debounces correctly, and only validates the most recent of edits sent within a second of each other', () => {
   const validationService = {
     checkName: jest.fn(),
   } as any;
