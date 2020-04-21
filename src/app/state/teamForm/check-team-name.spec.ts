@@ -14,7 +14,6 @@ import {
 } from './check-team-name';
 import { createReducer } from '@ngrx/store';
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
-import { ValidationService } from 'src/app/validation.service';
 import { of } from 'rxjs';
 
 const initialTeam: Team = {
