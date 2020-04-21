@@ -4,13 +4,18 @@ import {
   onNgrxForms,
   SetValueAction,
   SetAsyncErrorAction,
+  ClearAsyncErrorAction,
 } from 'ngrx-forms';
 import {
   checkTeamNameReducer,
   checkTeamNameFailedReducer,
   checkTeamNameFailedAction,
+  checkTeamNameEffect$,
 } from './checkTeamName';
 import { createReducer } from '@ngrx/store';
+import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
+import { ValidationService } from 'src/app/validation.service';
+import { of } from 'rxjs';
 
 const initialTeam: Team = {
   name: 'Albion',
@@ -74,8 +79,93 @@ test('checkTeamNameReducers set error when team name validation fails', () => {
   );
 
   expect(changeToName.teamForm.controls.name.isValidationPending).toBeFalsy();
-  console.log(changeToName.teamForm.controls.name);
   expect(changeToName.teamForm.controls.name.errors).toEqual({
     $checkTeamName: 'Albion',
+  });
+});
+
+test('checkTeamNameEffect$ debounces correctly, and sends most recent of close edits', () => {
+  const validationService = {
+    checkName: jest.fn(),
+  } as any;
+
+  validationService.checkName.mockReturnValueOnce(
+    of({ name: 'Albion Edited Again' })
+  );
+
+  const testScheduler = new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  });
+
+  testScheduler.run(({ hot, expectObservable }) => {
+    const action$ = hot('^a 100ms b', {
+      a: new SetValueAction(`${formId}.name`, 'Albion Edited'),
+      b: new SetValueAction(`${formId}.name`, 'Albion Edited Again'),
+    });
+
+    expectObservable(checkTeamNameEffect$(action$, validationService)).toBe(
+      ' 1102ms a',
+      {
+        a: new ClearAsyncErrorAction(`${formId}.name`, 'checkTeamName'),
+      }
+    );
+  });
+
+  expect(validationService.checkName).toHaveBeenCalledWith(
+    'Albion Edited Again'
+  );
+});
+
+test('checkTeamNameEffect$ sends action to clear validation state on successful validation', () => {
+  const validationService = {
+    checkName: jest.fn(),
+  } as any;
+
+  validationService.checkName.mockReturnValueOnce(
+    of({ name: 'Albion Edited' })
+  );
+
+  const testScheduler = new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  });
+
+  testScheduler.run(({ hot, expectObservable }) => {
+    const action$ = hot('^a-', {
+      a: new SetValueAction(`${formId}.name`, 'Albion Edited'),
+    });
+
+    expectObservable(checkTeamNameEffect$(action$, validationService)).toBe(
+      ' 1001ms a',
+      {
+        a: new ClearAsyncErrorAction(`${formId}.name`, 'checkTeamName'),
+      }
+    );
+  });
+});
+
+test('checkTeamNameEffect$ sends action to set validation error on successful validation', () => {
+  const validationService = {
+    checkName: jest.fn(),
+  } as any;
+
+  validationService.checkName.mockReturnValueOnce(
+    of({ name: 'Albion Edited', expletive: true })
+  );
+
+  const testScheduler = new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  });
+
+  testScheduler.run(({ hot, expectObservable }) => {
+    const action$ = hot('^a-', {
+      a: new SetValueAction(`${formId}.name`, 'Albion Edited'),
+    });
+
+    expectObservable(checkTeamNameEffect$(action$, validationService)).toBe(
+      ' 1001ms a',
+      {
+        a: checkTeamNameFailedAction({ name: 'Albion Edited' }),
+      }
+    );
   });
 });
