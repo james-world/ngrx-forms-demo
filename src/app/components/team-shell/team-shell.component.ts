@@ -40,8 +40,4 @@ export class TeamShellComponent implements OnInit {
   undoChanges() {
     this.store.dispatch(actions.undoChanges());
   }
-
-  trackByIndex(index: number) {
-    return index;
-  }
 }
