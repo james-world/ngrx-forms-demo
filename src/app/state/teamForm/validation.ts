@@ -20,7 +20,7 @@ export const validateTeamForm = updateGroup<Team>(
     maxSubs: (maxSubs, teamForm) =>
       validate(maxSubs, n => {
         const subCount = teamForm.value.players.reduce(
-          (prev, curr) => (curr.isSub ? prev + 1 : prev),
+          (prev, curr) => (curr.flags.isSub ? prev + 1 : prev),
           0
         );
         return n >= 0 && n - subCount < 0

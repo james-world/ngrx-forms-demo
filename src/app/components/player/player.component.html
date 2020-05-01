@@ -5,7 +5,9 @@
     A player name is required
   </mat-error>
 </mat-form-field>
-<mat-checkbox [ngrxFormControlState]="player.controls.isSub">Sub</mat-checkbox>
+<mat-checkbox [ngrxFormControlState]="player.controls.flags.controls.isSub"
+  >Sub</mat-checkbox
+>
 <button mat-icon-button type="button" (click)="removePlayer.emit()">
   <mat-icon style="font-size: 18px; vertical-align: middle;">delete</mat-icon>
 </button>

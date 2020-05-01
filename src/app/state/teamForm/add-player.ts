@@ -5,7 +5,7 @@ import { addArrayControl, updateGroup } from 'ngrx-forms';
 export const addPlayerAction = createAction('[Team Form] Add Player');
 
 export const addPlayerReducer: On<State> = on(addPlayerAction, state => {
-  const playerState: Player = { name: '', isSub: false };
+  const playerState: Player = { name: '', flags: { isSub: false } };
 
   const addPlayer = addArrayControl<Player>(playerState);
   const updateForm = updateGroup<Team>({

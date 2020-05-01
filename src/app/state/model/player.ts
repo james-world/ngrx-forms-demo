@@ -1,4 +1,6 @@
 export interface Player {
   name: string;
-  isSub: boolean;
+  flags: {
+    isSub: boolean;
+  };
 }

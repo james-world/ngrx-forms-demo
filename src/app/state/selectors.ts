@@ -1,5 +1,10 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { State } from './model';
+import {
+  createSelector,
+  createFeatureSelector,
+  createSelectorFactory,
+  defaultMemoize,
+} from '@ngrx/store';
+import { State, Player } from './model';
 
 export interface AppState {
   app: State;
@@ -17,8 +22,19 @@ const selectPlayers = createSelector(
   state => state.teamForm.value.players
 );
 
-export const selectSubCount = createSelector(selectPlayers, players => {
-  return players.reduce((prev, curr) => (curr.isSub ? prev + 1 : prev), 0);
+export function checkEqual(a, b) {
+  return (
+    a && b && a.length === b.length && a.every((val, idx) => val === b[idx])
+  );
+}
+
+export const selectSubs = createSelectorFactory(projector =>
+  defaultMemoize(projector, undefined, checkEqual)
+)(selectPlayers, (players: Player[]) => players.map(p => p.flags.isSub));
+
+export const selectSubCount = createSelector(selectSubs, players => {
+  console.log('Update Sub Count');
+  return players.reduce((prev, curr) => (curr ? prev + 1 : prev), 0);
 });
 
 const selectMaxSubs = createSelector(selectTeamForm, team =>
@@ -29,6 +45,7 @@ export const selectSubsRemaining = createSelector(
   selectSubCount,
   selectMaxSubs,
   (subCount, maxSubs) => {
+    console.log('Update Subs Remaining');
     if (subCount === null || maxSubs === null) {
       return null;
     } else {

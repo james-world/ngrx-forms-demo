@@ -16,7 +16,7 @@ export function createTeam(size: number): Team {
   };
 
   for (let i = 0; i < size; i++) {
-    team.players.push({ name: `Player-${i}`, isSub: false });
+    team.players.push({ name: `Player-${i}`, flags: { isSub: false } });
   }
 
   return team;
