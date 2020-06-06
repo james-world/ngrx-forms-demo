@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Team, State } from '../../state/model';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { FormGroupState } from 'ngrx-forms';
 import * as actions from '../../state/actions';
 import * as appSelectors from '../../state/selectors';
+import * as rfc6902 from 'rfc6902';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'tb-team-shell',
@@ -16,6 +18,7 @@ export class TeamShellComponent implements OnInit {
   teamForm$: Observable<FormGroupState<Team>>;
   team$: Observable<Team>;
   subCount$: Observable<number>;
+  teamChanges$: Observable<object[]>;
 
   constructor(private store: Store<{ app: State }>) {}
 
@@ -23,6 +26,9 @@ export class TeamShellComponent implements OnInit {
     this.teamForm$ = this.store.pipe(select(appSelectors.selectTeamForm));
     this.team$ = this.store.pipe(select(appSelectors.selectTeam));
     this.subCount$ = this.store.pipe(select(appSelectors.selectSubCount));
+    this.teamChanges$ = combineLatest([this.teamForm$, this.team$]).pipe(
+      map(([tf, t]) => rfc6902.createPatch(t, tf.value))
+    );
   }
 
   addPlayer() {
